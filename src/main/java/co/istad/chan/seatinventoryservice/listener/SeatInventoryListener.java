@@ -16,11 +16,10 @@ public class SeatInventoryListener {
 
     private final SeatInventoryService seatInventoryService;
 
-    @KafkaListener(topics = "movie-booking-events", groupId = "seat-event-group-v11")
+    @KafkaListener(topics = "movie-booking-events", groupId = "seat-service-group")
     public void consumeBookingEvent(BookingCreatedEvent bookingCreatedEvent) {
 
-        log.info("Received booking event: reservationId={}, seats={}",
-                bookingCreatedEvent.bookingId(), bookingCreatedEvent.seatIds());
+        seatInventoryService.handleBooking(bookingCreatedEvent);
 
     }
 

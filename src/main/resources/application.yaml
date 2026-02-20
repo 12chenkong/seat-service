@@ -1,17 +1,18 @@
 spring:
   kafka:
     bootstrap-servers: localhost:29092
+
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
     consumer:
-      group-id: seat-event-group-v11
+      group-id: seat-service-group
+      auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      auto-offset-reset: earliest
-      
       properties:
-        spring.json.trusted.packages: "*"
+        spring.json.trusted.packages: "co.istad.chan.seatinventoryservice.events"
         spring.json.value.default.type: co.istad.chan.seatinventoryservice.events.BookingCreatedEvent
         spring.json.use.type.headers: false
 
@@ -24,15 +25,16 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-       ddl-auto: create-drop
-    show-sql: true
+       ddl-auto: update
+    show-sql: false
     properties:
         hibernate:
-          format_sql: true
+          format_sql: false
 
 
 
 server:
   port: 9997
-
-
+logging:
+  level:
+    co.istad.chan.seatinventoryservice.listener.SeatInventoryListener: DEBUG

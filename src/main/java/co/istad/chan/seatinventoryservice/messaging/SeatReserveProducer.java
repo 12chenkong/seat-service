@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SeatReserveProducer {
 
-    private KafkaTemplate<String, SeatReservedEvent> template;
+    private final KafkaTemplate<String, SeatReservedEvent> template;
 
     public void publishSeatReserveEvents(SeatReservedEvent reservedEvent) {
         try {
